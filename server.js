@@ -11,25 +11,22 @@ require("dotenv").config();
 const app = express();
 
 app.use(cors());
+app.use((req, res, next) => {
+  console.log("➡️ Incoming request:", req.method, req.path);
+  next();
+});
+
 // app.use(express.json());
 app.use("/profilePics", express.static("profilePics"));
 app.use(express.static(path.join(__dirname, "./client/build")));
 
-const uploadPath = path.join(__dirname, "profilePics");
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-  console.log("profilePics folder created");
-} else {
-  console.log("profilePics folder already exists ✅");
-}
-
-// Cloudinary Config
-const cloudinary = require("cloudinary").v2;
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET,
-});
+// const uploadPath = path.join(__dirname, "profilePics");
+// if (!fs.existsSync(uploadPath)) {
+//   fs.mkdirSync(uploadPath, { recursive: true });
+//   console.log("profilePics folder created");
+// } else {
+//   console.log("profilePics folder already exists ✅");
+// }
 
 // Multer Setup
 const storage = multer.diskStorage({
@@ -41,6 +38,14 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+// Cloudinary Config
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 // Mongoose Schema
 const userSchema = new mongoose.Schema({
@@ -95,8 +100,8 @@ const connectToMDB = async () => {
 
 connectToMDB();
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html")); // ✅
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 // Register
