@@ -213,8 +213,7 @@ app.post("/validateToken", upload.none(), async (req, res) => {
   }
 });
 
-// Serve React App (Catch-all)
-app.get("/*", (req, res) => {
+app.get("/:any*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
