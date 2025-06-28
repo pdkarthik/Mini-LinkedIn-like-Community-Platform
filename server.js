@@ -6,27 +6,31 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const path = require("path");
 const fs = require("fs");
+const morgan = require("morgan");
 require("dotenv").config();
 
 const app = express();
 
+// Middleware
 app.use(cors());
-app.use((req, res, next) => {
-  console.log("➡️ Incoming request:", req.method, req.path);
-  next();
-});
+app.use(express.json());
 
-// app.use(express.json());
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+// Serve static files
 app.use("/profilePics", express.static("profilePics"));
 app.use(express.static(path.join(__dirname, "./client/build")));
 
-// const uploadPath = path.join(__dirname, "profilePics");
-// if (!fs.existsSync(uploadPath)) {
-//   fs.mkdirSync(uploadPath, { recursive: true });
-//   console.log("profilePics folder created");
-// } else {
-//   console.log("profilePics folder already exists ✅");
-// }
+// Ensure profilePics directory exists
+const uploadPath = path.join(__dirname, "profilePics");
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+  console.log("📁 profilePics folder created");
+} else {
+  console.log("📁 profilePics folder already exists ✅");
+}
 
 // Multer Setup
 const storage = multer.diskStorage({
@@ -37,7 +41,7 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}_${file.originalname}`);
   },
 });
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 // Cloudinary Config
 const cloudinary = require("cloudinary").v2;
@@ -88,28 +92,24 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("members", userSchema);
 
-// DB Connect
+// MongoDB Connection
 const connectToMDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("✅ MongoDB connected");
   } catch (err) {
-    console.log("❌ MongoDB connection error:", err);
+    console.error("❌ MongoDB connection error:", err.message);
   }
 };
 
 connectToMDB();
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
-
-// Register
+// Register Route
 app.post("/register", upload.single("profilePic"), async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Normalize tasks (array or single string)
+    // Normalize tasks
     let tasksArray = [];
     if (Array.isArray(req.body.tasks)) {
       tasksArray = req.body.tasks;
@@ -153,7 +153,7 @@ app.post("/register", upload.single("profilePic"), async (req, res) => {
   }
 });
 
-// Login
+// Login Route
 app.post("/login", upload.none(), async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -167,19 +167,20 @@ app.post("/login", upload.none(), async (req, res) => {
       user.password
     );
 
-    if (isPasswordCorrect) {
-      const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
-      const userDetails = {
-        name: user.name,
-        email: user.email,
-        profilePic: user.profilePic,
-        tasks: user.tasks || [],
-        authToken: token,
-      };
-      res.json({ status: "success", data: userDetails });
-    } else {
-      res.json({ status: "failure", msg: "Invalid Password" });
+    if (!isPasswordCorrect) {
+      return res.json({ status: "failure", msg: "Invalid Password" });
     }
+
+    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+    const userDetails = {
+      name: user.name,
+      email: user.email,
+      profilePic: user.profilePic,
+      tasks: user.tasks || [],
+      authToken: token,
+    };
+
+    res.json({ status: "success", data: userDetails });
   } catch (err) {
     res
       .status(500)
@@ -212,4 +213,11 @@ app.post("/validateToken", upload.none(), async (req, res) => {
   }
 });
 
-app.listen(4567, () => console.log(`\nServer running on port 4567...\n`));
+// Serve React App (Catch-all)
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+// Start Server
+const PORT = process.env.PORT || 4567;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
