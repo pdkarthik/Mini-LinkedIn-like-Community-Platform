@@ -1,4 +1,4 @@
-💼 Mini LinkedIn-like Community Platform
+                                               💼 Mini LinkedIn-like Community Platform
 
 🌐 Live: 🔗 https://mini-linkedin-like-community-platform-1.onrender.com
 
@@ -38,10 +38,32 @@ The UI is designed to be clean, minimal, and responsive using Tailwind CSS and c
 - Smooth transitions, hover animations, soft shadows, and rounded elements provide a professional feel.
 
 🧱 Technology Stack
-Layer	Technologies Used
-Frontend	React, React Router, Axios, Tailwind CSS
-Backend	Node.js, Express
-Database	MongoDB with Mongoose ODM
-Authentication	JSON Web Token (JWT)
-Styling	Tailwind CSS, custom components
+
+Frontend: React, React Router, Axios, Tailwind CSS
+
+Backend: Node.js, Express
+
+Database: MongoDB with Mongoose ODM
+
+Authentication: JSON Web Token (JWT)
+
+Styling: Tailwind CSS, custom components
+
+
+| METHOD | ENDPOINT         | DESCRIPTION            |
+| ------ | ---------------- | ---------------------- |
+| POST   | `/register`      | Register a new user    |
+| POST   | `/login`         | Log in existing user   |
+| POST   | `/validateToken` | Check if JWT is valid  |
+| GET    | `/posts`         | Fetch all public posts |
+| POST   | `/posts`         | Create a new post      |
+| GET    | `/profile/:id`   | Get posts by a user ID |
+
+
+📌 Key Design Decisions
+
+- Auto-refreshing feed: Eliminates the need for WebSockets while maintaining near real-time updates.
+- Scoped component architecture: Reusable components for Auth, Post, Feed, Profile, etc.
+- Dark mode-ready: The entire platform is visually consistent in both light and dark themes.
+
 
