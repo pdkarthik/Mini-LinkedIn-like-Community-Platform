@@ -16,11 +16,23 @@ This platform simulates a simplified version of LinkedIn's core functionalities,
 The UI is designed to be clean, minimal, and responsive using Tailwind CSS and custom components. This makes it both mobile-friendly and aesthetically pleasant.
 
 🔧 Core Features (In Depth)
-
 ✅ 1. Authentication & User Management
-- Registration & login handled securely using JWT.
-- Tokens are stored in localStorage and validated on every refresh to keep sessions active.
-- If the token is invalid or missing, the user is redirected to login, ensuring route protection.
+
+🔁 Authentication Flow (Formik, Yup, bcrypt)
+
+🧾 Form Handling – Formik + Yup
+
+- User login and registration forms are built using Formik for seamless form state management.
+- Validation is handled with Yup, enforcing rules like required fields, valid email format, and minimum password length.
+- Real-time validation feedback is provided, enhancing the user experience.
+
+🔒 Password Security – bcrypt
+
+- During registration, user passwords are securely hashed using bcrypt before being stored in the database.
+- On login, the provided password is compared with the hashed password using bcrypt for verification.
+- Authentication is handled using JWT (JSON Web Tokens).
+- Tokens are securely stored in localStorage and are validated on each page refresh to maintain session persistence.
+- If the token is missing or invalid, the user is automatically redirected to the login page, ensuring protected access to private routes.
 
 📝 2. Post Creation & Feed Display
 - Authenticated users can post text updates (just like LinkedIn statuses).
@@ -37,17 +49,36 @@ The UI is designed to be clean, minimal, and responsive using Tailwind CSS and c
 - Includes dark mode-ready styles.
 - Smooth transitions, hover animations, soft shadows, and rounded elements provide a professional feel.
 
-🧱 Technology Stack
+⚙️ Tech Stack Used
 
-Frontend: React, React Router, Axios, Tailwind CSS
+🖥️ Frontend
 
-Backend: Node.js, Express
+React.js – Component-based architecture for UI
 
-Database: MongoDB with Mongoose ODM
+React Router DOM – Routing and protected routes
 
-Authentication: JSON Web Token (JWT)
+Tailwind CSS – Rapid styling with utility classes
 
-Styling: Tailwind CSS, custom components
+Formik – Elegant form handling and state management
+
+Yup – Form validation schema integrated with Formik
+
+Axios – For making API requests
+
+Lucide Icons – Modern and consistent icon set
+
+React Hooks – For managing state and side effects (useState, useEffect, useRef)
+
+
+🌐 Backend
+
+Node.js & Express – RESTful API server
+
+MongoDB with Mongoose – NoSQL database for storing users and posts
+
+bcrypt – Secure password hashing before saving user credentials
+
+jsonwebtoken (JWT) – For authentication and protected routes
 
 
 | METHOD | ENDPOINT         | DESCRIPTION            |
@@ -77,7 +108,7 @@ cd Mini LinkedIn-like Community Platform
 2. Backend Setup
 
 npm install
-npm run dev
+npm start
 Ensure MongoDB is running locally or replace MONGO_URI with your MongoDB Atlas string in .env:
 
 MONGO_URI=your_mongo_uri
@@ -87,7 +118,7 @@ JWT_SECRET=your_jwt_secret
 
 cd client
 npm install
-npm run dev
+npm start
 Frontend will run on: http://localhost:5173 (or as set in vite.config.js)
 
 
