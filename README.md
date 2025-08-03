@@ -1,4 +1,4 @@
-                                               💼 Mini LinkedIn-like Community Platform
+                                          💼 Mini LinkedIn-like Community Platform
 
 🌐 Live: 🔗 https://mini-linkedin-like-community-platform-1.onrender.com
 
