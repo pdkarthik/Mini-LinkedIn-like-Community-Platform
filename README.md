@@ -67,3 +67,43 @@ Styling: Tailwind CSS, custom components
 - Dark mode-ready: The entire platform is visually consistent in both light and dark themes.
 
 
+## 🛠️ Setup Instructions
+
+### 1. Clone the Repository
+
+git clone https://github.com/pdkarthik/Mini-LinkedIn-like-Community-Platform
+cd Mini LinkedIn-like Community Platform
+
+2. Backend Setup
+
+npm install
+npm run dev
+Ensure MongoDB is running locally or replace MONGO_URI with your MongoDB Atlas string in .env:
+
+MONGO_URI=your_mongo_uri
+JWT_SECRET=your_jwt_secret
+
+3. Frontend Setup
+
+cd client
+npm install
+npm run dev
+Frontend will run on: http://localhost:5173 (or as set in vite.config.js)
+
+
+👤 Admin / Demo User Logins
+
+Note: For demo purposes, you can register with any email and password.
+
+✅ Example:
+
+Email: karthik@gmail.com
+
+Password: Karthik25$
+
+✨ Extra Features
+- User profile view with dynamic routing
+- Token-based session persistence
+- Dark mode-friendly design
+- Beautiful UI styled with Tailwind CSS
+
