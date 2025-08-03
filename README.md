@@ -104,22 +104,29 @@ jsonwebtoken (JWT) – For authentication and protected routes
 ### 1. Clone the Repository
 
 git clone https://github.com/pdkarthik/Mini-LinkedIn-like-Community-Platform
+
 cd Mini LinkedIn-like Community Platform
 
 2. Backend Setup
 
 npm install
+
 npm start
+
 Ensure MongoDB is running locally or replace MONGO_URI with your MongoDB Atlas string in .env:
 
 MONGO_URI=your_mongo_uri
+
 JWT_SECRET=your_jwt_secret
 
 3. Frontend Setup
 
 cd client
+
 npm install
+
 npm start
+
 Frontend will run on: http://localhost:5173 (or as set in vite.config.js)
 
 
