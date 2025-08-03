@@ -1,3 +1,13 @@
+/* index.css or tailwind.config.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add soft scrollbar for lovely UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #f472b6; /* pink-400 */
+  border-radius: 8px;
+}

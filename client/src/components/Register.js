@@ -180,14 +180,14 @@ const Register = () => {
             <FieldArray name="tasks">
               {({ push, remove }) => (
                 <div className="flex flex-col text-left gap-2 w-full">
-                  <label className="font-medium dark:text-white">Notes</label>
+                  <label className="font-medium dark:text-white">Bio</label>
                   {values.tasks.map((task, idx) => (
                     <div key={idx} className="flex gap-2 items-start w-full">
                       <Field
                         name={`tasks[${idx}]`}
                         as={TextareaAutosize}
                         minRows={3}
-                        placeholder="Enter note"
+                        placeholder="Write here..."
                         className="p-2 border rounded w-full resize-y dark:bg-gray-800 dark:text-white"
                       />
                       <button
@@ -204,7 +204,7 @@ const Register = () => {
                     onClick={() => push("")}
                     className="bg-blue-500 text-white px-3 py-1 rounded w-fit"
                   >
-                    + Add Note
+                    + Add Bio
                   </button>
                 </div>
               )}

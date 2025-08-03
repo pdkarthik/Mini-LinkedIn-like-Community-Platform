@@ -5,6 +5,10 @@ import Login from "./components/Login";
 import { Dashboard } from "./components/Dashboard";
 import React, { useEffect, useState } from "react";
 import ThemeToggle from "./components/ThemeToggle";
+import PostFeed from "./components/PostFeed";
+import PostForm from "./components/PostForm";
+import Profile from "./components/Profile";
+import ProtectedRoute from "./components/ProtectedRoute"; // 👈 NEW
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -31,9 +35,34 @@ function App() {
         <Routes>
           <Route path="/" element={<Register isDarkMode={isDarkMode} />} />
           <Route path="/login" element={<Login isDarkMode={isDarkMode} />} />
+
+          {/* ✅ Protected Routes Below */}
           <Route
             path="/dashboard"
-            element={<Dashboard isDarkMode={isDarkMode} />}
+            element={
+              <ProtectedRoute>
+                <Dashboard isDarkMode={isDarkMode} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/feed"
+            element={
+              <ProtectedRoute>
+                <>
+                  <PostForm onPostCreated={() => window.location.reload()} />
+                  <PostFeed />
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/:id"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </div>
