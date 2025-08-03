@@ -16,6 +16,7 @@ This platform simulates a simplified version of LinkedIn's core functionalities,
 The UI is designed to be clean, minimal, and responsive using Tailwind CSS and custom components. This makes it both mobile-friendly and aesthetically pleasant.
 
 🔧 Core Features (In Depth)
+
 ✅ 1. Authentication & User Management
 
 🔁 Authentication Flow (Formik, Yup, bcrypt)
