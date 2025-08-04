@@ -12,7 +12,7 @@ export const Dashboard = () => {
     if (!loginDetails || !loginDetails.email) {
       navigate("/login");
     }
-  }, [loginDetails, navigate]); // Added dependencies to trigger re-check on state change
+  }, [loginDetails]); 
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
