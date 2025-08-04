@@ -81,6 +81,14 @@ bcrypt – Secure password hashing before saving user credentials
 
 jsonwebtoken (JWT) – For authentication and protected routes
 
+☁️ Cloud & Other Tools
+
+Cloudinary – For uploading and hosting profile images
+
+Multer – Middleware for handling file uploads
+
+dotenv – For environment variable management
+
 
 | METHOD | ENDPOINT         | DESCRIPTION            |
 | ------ | ---------------- | ---------------------- |
@@ -141,6 +149,7 @@ Email: karthik@gmail.com
 Password: Karthik25$
 
 ✨ Extra Features
+- Profile picture upload (Cloudinary + Multer)
 - User profile view with dynamic routing
 - Token-based session persistence
 - Dark mode-friendly design
