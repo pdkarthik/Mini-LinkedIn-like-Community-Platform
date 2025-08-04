@@ -20,9 +20,6 @@ export const Dashboard = () => {
     navigate("/login");
   };
 
-  // 🚫 Don't render until loginDetails is loaded
-  if (!loginDetails || !loginDetails._id) return <div className="text-center pt-10 text-gray-600 dark:text-gray-300">Loading dashboard...</div>;
-
   return (
     <div className="max-w-xl mx-auto py-10 px-6">
       {/* Header with Navigation */}
