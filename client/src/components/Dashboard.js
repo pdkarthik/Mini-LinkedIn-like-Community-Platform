@@ -12,13 +12,16 @@ export const Dashboard = () => {
     if (!loginDetails || !loginDetails.email) {
       navigate("/login");
     }
-  }, []);
+  }, [loginDetails, navigate]); // Added dependencies to trigger re-check on state change
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     dispatch({ type: "login", data: {} });
     navigate("/login");
   };
+
+  // 🚫 Don't render until loginDetails is loaded
+  if (!loginDetails || !loginDetails._id) return <div className="text-center pt-10 text-gray-600 dark:text-gray-300">Loading dashboard...</div>;
 
   return (
     <div className="max-w-xl mx-auto py-10 px-6">
