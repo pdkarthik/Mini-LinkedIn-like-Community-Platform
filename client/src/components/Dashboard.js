@@ -6,17 +6,38 @@ import { LogOut, ArrowRight, List, Pencil } from "lucide-react";
 export const Dashboard = () => {
   const loginDetails = useSelector((state) => state.loginDetails);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [currentUserId, setCurrentUserId] = useState("");
+
+  axios.defaults.baseURL = "";
 
   useEffect(() => {
     if (!loginDetails || !loginDetails.email) {
       navigate("/login");
     }
+
+    const fetchCurrentUser = async () => {
+      try {
+        let dataToSend = new FormData();
+        dataToSend.append("authToken", localStorage.getItem("authToken"));
+
+        let res = await axios.post("/validateToken", dataToSend);
+        if (res.data?.status === "success") {
+          console.log(res.data);
+          // dispatch({ type: "login", data: res.data.data });
+          setCurrentUserId(res.data.data._id);
+        }
+      } catch (err) {
+        console.error("Token validation failed", err);
+      }
+    };
+
+    fetchCurrentUser();
   }, []); 
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    dispatch({ type: "login", data: {} });
+    // localStorage.removeItem("authToken");
+    // dispatch({ type: "login", data: {} });
+    localStorage.clear();
     navigate("/login");
   };
 
@@ -28,9 +49,9 @@ export const Dashboard = () => {
           👤 Dashboard
         </h2>
         <div className="flex gap-4">
-          {loginDetails && loginDetails._id && (
+          {currentUserId && (
             <Link
-              to={`/profile/${loginDetails._id}`}
+              to={`/profile/${currentUserId}`}
               className="text-blue-600 dark:text-blue-400 hover:underline font-semibold flex items-center gap-1 text-sm"
             >
               Your Posts <ArrowRight className="w-4 h-4" />
