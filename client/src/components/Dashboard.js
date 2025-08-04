@@ -12,7 +12,7 @@ export const Dashboard = () => {
     if (!loginDetails || !loginDetails.email) {
       navigate("/login");
     }
-  }, [loginDetails]); 
+  }, []); 
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -28,12 +28,14 @@ export const Dashboard = () => {
           👤 Dashboard
         </h2>
         <div className="flex gap-4">
-          <Link
-            to={`/profile/${loginDetails._id}`}
-            className="text-blue-600 dark:text-blue-400 hover:underline font-semibold flex items-center gap-1 text-sm"
-          >
-            Your Posts <ArrowRight className="w-4 h-4" />
-          </Link>
+          {loginDetails && loginDetails._id && (
+            <Link
+              to={`/profile/${loginDetails._id}`}
+              className="text-blue-600 dark:text-blue-400 hover:underline font-semibold flex items-center gap-1 text-sm"
+            >
+              Your Posts <ArrowRight className="w-4 h-4" />
+            </Link>
+          )}
 
           <Link
             to="/feed"
